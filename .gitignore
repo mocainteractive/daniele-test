@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Storage & Exports (dati locali utente)
+storage/results/*.json
+storage/exports/*
+storage/logs/*
+
+# Keep directory structure
+!storage/results/.gitkeep
+!storage/exports/.gitkeep
+!storage/logs/.gitkeep
+
+# Temporary files
+*.tmp
+*.log
+
+# API Keys (sicurezza)
+.env
+secrets.py
+api_keys.txt
+
+# Test outputs
+*.json
+*.csv
+*.xlsx
+*.pdf
+social_urls_*.json
+instagram_posts_*.json
+tiktok_videos_*.json
+youtube_videos_*.json
+youtube_ai_analysis_*.json
+export_*.json
+history_*.csv
