@@ -38,12 +38,32 @@ Il tuo script originale aveva questi problemi critici:
 4. Salva (Ctrl+S o Cmd+S)
 
 ### Passo 2: Configura l'API Key (IMPORTANTE!)
-1. Torna al tuo Google Sheets
-2. Apri il menu **🧠 Prompt Studio** → **⚙️ Configura API Key**
-3. Inserisci la tua API Key OpenAI
-4. Clicca OK
 
-**⚠️ IMPORTANTE**: Dopo aver configurato la key, **rimuovi la key dal codice vecchio** se è ancora visibile da qualche parte!
+Hai **2 opzioni** per configurare l'API Key:
+
+#### **OPZIONE A: Nel Codice (Più Semplice)** ⭐
+1. In Apps Script, trova la sezione in alto:
+```javascript
+const OPENAI_API_KEY = 'YOUR_API_KEY_HERE';
+```
+2. Sostituisci `'YOUR_API_KEY_HERE'` con la tua API Key:
+```javascript
+const OPENAI_API_KEY = 'sk-proj-abc123...';
+```
+3. Salva (Ctrl+S)
+
+#### **OPZIONE B: Tramite Menu (Più Sicuro)** 🔒
+1. Lascia `OPENAI_API_KEY = 'YOUR_API_KEY_HERE';` nel codice
+2. Torna al tuo Google Sheets
+3. Apri il menu **🧠 Prompt Studio** → **⚙️ Configura API Key**
+4. Inserisci la tua API Key OpenAI
+5. Clicca OK
+
+**💡 Quale scegliere?**
+- **Opzione A**: Più semplice, key sempre disponibile
+- **Opzione B**: Più sicura, key criptata (non visibile nel codice)
+
+**⚠️ IMPORTANTE**: Non condividere mai il tuo script con altri se hai inserito la key nel codice!
 
 ### Passo 3: Reset dei Trigger Esistenti
 Se hai già eseguito lo script vecchio, potrebbero esserci trigger attivi:
@@ -186,13 +206,27 @@ Se hai problemi:
 
 ## 🔒 Sicurezza API Key
 
-La nuova versione salva l'API Key in modo sicuro usando `PropertiesService`, che:
+La nuova versione offre **2 modi** per gestire l'API Key:
+
+### Opzione 1: Nel Codice (OPENAI_API_KEY)
+```javascript
+const OPENAI_API_KEY = 'sk-proj-abc123...';
+```
+✅ **Pro**: Semplice, sempre disponibile
+❌ **Contro**: Visibile nel codice, meno sicuro se condiviso
+
+### Opzione 2: PropertiesService (Menu)
+L'API Key viene salvata con `PropertiesService`, che:
 - È specifico per il tuo account Google
 - Non è visibile nel codice
 - È criptato da Google
 - Può essere aggiornato facilmente dal menu
 
-**IMPORTANTE**: Dopo la migrazione, assicurati di:
-1. Non avere più la API Key hardcoded nel codice
-2. Non condividere il codice con la key all'interno
-3. Rigenerare la key se l'hai condivisa per errore
+✅ **Pro**: Più sicuro, non visibile
+❌ **Contro**: Richiede un passo extra di configurazione
+
+**IMPORTANTE - Regole di Sicurezza**:
+1. ⚠️ **Non condividere MAI** il codice se contiene la API Key
+2. ⚠️ Se usi l'Opzione 1 e condividi il progetto, **rimuovi la key** prima
+3. ⚠️ Se hai accidentalmente condiviso la key, **rigenerala subito** su OpenAI
+4. ✅ Se usi l'Opzione 2 (PropertiesService), puoi condividere il codice tranquillamente

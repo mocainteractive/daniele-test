@@ -19,6 +19,17 @@ const BATCH_CONFIG = {
 
 const LOCK_TIMEOUT = 300000; // 5 minuti timeout per il lock
 
+// ====================== API KEY CONFIGURATION ======================
+// OPZIONE 1: Inserisci la tua API Key qui (meno sicuro ma più semplice)
+// Sostituisci 'YOUR_API_KEY_HERE' con la tua API key OpenAI
+const OPENAI_API_KEY = 'YOUR_API_KEY_HERE';
+
+// OPZIONE 2: Lascia vuota la costante sopra e usa il menu
+// "⚙️ Configura API Key" per salvarla in modo sicuro
+//
+// Lo script controlla prima la costante sopra, poi PropertiesService
+// =====================================================================
+
 // ====================== MENU ======================
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
@@ -152,12 +163,16 @@ function promptWizardStep1() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const promptSheet = ss.getSheetByName('prompt3');
 
-  // Verifica API Key
-  const apiKey = PropertiesService.getScriptProperties().getProperty('OPENAI_API_KEY');
-  if (!apiKey) {
+  // Verifica API Key (controlla sia costante che PropertiesService)
+  let apiKey = OPENAI_API_KEY;
+  if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+    apiKey = PropertiesService.getScriptProperties().getProperty('OPENAI_API_KEY');
+  }
+
+  if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
     const setup = ui.alert(
       'API Key Mancante',
-      'Non hai ancora configurato la tua API Key OpenAI.\nVuoi configurarla ora?',
+      'Non hai ancora configurato la tua API Key OpenAI.\n\nPuoi:\n1. Inserirla nella costante OPENAI_API_KEY nel codice\n2. Configurarla tramite menu\n\nVuoi configurarla tramite menu ora?',
       ui.ButtonSet.YES_NO
     );
     if (setup === ui.Button.YES) {
@@ -437,10 +452,16 @@ IMPORTANTE: Genera esattamente ${batch.length} prompt separati da "---". Nient'a
 
 // ====================== GPT-4o API ======================
 function GPT4oQuery(prompt) {
-  const apiKey = PropertiesService.getScriptProperties().getProperty('OPENAI_API_KEY');
+  // Controlla prima la costante hardcoded, poi PropertiesService
+  let apiKey = OPENAI_API_KEY;
 
-  if (!apiKey) {
-    throw new Error('API Key OpenAI non configurata. Usa il menu "Configura API Key".');
+  // Se la costante è vuota o è il placeholder, prova PropertiesService
+  if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+    apiKey = PropertiesService.getScriptProperties().getProperty('OPENAI_API_KEY');
+  }
+
+  if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+    throw new Error('API Key OpenAI non configurata. Inseriscila nella costante OPENAI_API_KEY o usa il menu "Configura API Key".');
   }
 
   const url = 'https://api.openai.com/v1/chat/completions';

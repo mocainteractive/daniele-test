@@ -95,22 +95,27 @@ function GPT4oQuery(prompt) {
   var apiKey = 'sk-proj-NucNB4FVvsg2N9EExGuU...'; // ESPOSTA!
 }
 ```
-❌ Key visibile nel codice
+❌ Key sempre visibile nel codice
 
 **Dopo**:
 ```javascript
-function GPT4oQuery(prompt) {
-  const apiKey = PropertiesService.getScriptProperties().getProperty('OPENAI_API_KEY');
-  if (!apiKey) {
-    throw new Error('API Key non configurata');
-  }
+// OPZIONE 1: Nel codice (più semplice)
+const OPENAI_API_KEY = 'YOUR_API_KEY_HERE'; // ← Inserisci qui
+
+// OPZIONE 2: Tramite menu (più sicuro)
+function setupApiKey() {
+  // Salva in PropertiesService (criptato)
 }
 
-function setupApiKey() {
-  // Menu per configurare in modo sicuro
+function GPT4oQuery(prompt) {
+  // Controlla prima la costante, poi PropertiesService
+  let apiKey = OPENAI_API_KEY;
+  if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+    apiKey = PropertiesService.getScriptProperties().getProperty('OPENAI_API_KEY');
+  }
 }
 ```
-✅ Key criptata in PropertiesService
+✅ Due opzioni: hardcoded (semplice) o PropertiesService (sicuro)
 
 ---
 
